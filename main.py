@@ -2,37 +2,8 @@ import re
 
 def main():
     def validate_rom_num(num):
-        if re.search("[^MDCLXVImdclxvi]", num):
-            print("Error: The expression contains characters that are not allowed")
-            return False
-        elif re.search("M{4}|D{2}|C{4}|L{2}|X{4}|V{2}|I{4}", num):
-            print("Error: Roman numerals that are powers of 10 cannot appear more than 3 times; roman numerals that are multiples of 5 but not multiples of 10 cannot appear more than once")
-            return False
-        elif (num.count("CM") > 1 or num.count("CD") > 1 or (re.search("(CM|CD)(?=C|D)", num)) or
-            num.count("XC") > 1 or num.count("XL") > 1 or (re.search("(XC|XL)(?=X|L)", num)) or
-            num.count("IX") > 1 or num.count("IV") > 1 or (re.search("(IX|IV)(?!$)", num))):
-            print("Error: unexpected token after subtractive operation token")
-            return False
-        elif re.search("I(?!$|X$|V$|I$|II$)|IIX|IIV", num):
-            print("Error: unexpected token after token 'I'")
-            return False
-        elif re.search("V(?!$|I)", num):
-            print("Error: unexpected token after token 'V'")
-            return False
-        elif re.search("X(?!$|C|L|X|V|I)|XXC|XXL", num):
-            print("Error: unexpected token after token 'X'")
-            return False
-        elif re.search("L(?!$|X|V|I)", num):
-            print("Error: unexpected token after token 'L'")
-            return False
-        elif re.search("C(?!$|M|D|C|L|X|V|I)|CCM|CCD", num):
-            print("Error: unexpected token after token 'C'")
-            return False
-        elif re.search("D(?!$|C|L|X|V|I)", num):
-            print("Error: unexpected token after token 'D'")
-            return False
-        elif re.search("M(?!$|M|D|C|L|X|V|I)", num):
-            print("Error: unexpected token after token 'M'")
+        if not re.fullmatch(r"M{0,3}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$", num):
+            print("Error: invalid input")
             return False
         else:
             return True
